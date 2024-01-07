@@ -1,0 +1,87 @@
+CREATE TABLE smartwatch_exercise
+(id INTEGER PRIMARY KEY AUTOIINCREMENT,
+exercise TEXT,
+minutes INTEGER,
+cals INTEGER,
+heart_rate INTEGER,);
+
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("stationarybike", 20,90,80);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("dance",23,91,80);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("walk",20,80,87);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("snowboarding",25,95,85);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("ice_climbing",25,100,85);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("hiking",25,98,85);
+
+--Q1- SHOW THE HARDCORE ACTIVITIES
+
+SELECT*
+FROM smartwatch_exercise
+WHERE exercise = "snowboarding"
+OR exercise  = "ice_climbing"
+OR exercise = "hiking";
+
+--ABOVE IS MORE OF AN EXAMPLE USING "OR"
+BELOW IS A BETTER EXAMPLE USING "IN"
+
+
+SELECT *
+FROM smartwatch_exercise
+WHERE exercise 
+IN ("snowboarding", "ice_climbing","hiking");
+
+--Q2- NOW SHOW ACTIVITIES THAT ARE NOT AS HARDCORE
+
+SELECT *
+FROM smartwatch_exercise
+WHERE exercise 
+NOT IN ("snowboarding","ice_climbing","hiking");
+
+--THE ABOVE TABLE WOULD SHOW STATIONARY BIKE, WALK, AND DANCE.
+
+--Q3- ADD A NEW TABLE FOR A FRIENDS SMART WATCH ACTIVITY (COULD HAVE DIFFERENT ACTIVITIES)
+
+CREATE TABLE  friend_smartwatch
+(id INTEGER PRIMARY KEY AUTOIINCREMENT,
+exercise TEXT,
+minutes INTEGER,
+cals INTEGER,
+heart_rate INTEGER,);
+
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("stationarybike", 20,90,80);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("dance",23,91,80);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("walk",20,80,87);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("snowboarding",25,95,85);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("kickboxing",25,100,85);
+INSERT INTO smartwatch_exercise (exercise, minutes, cals, heart_rate) VALUES ("stengthtraining",25,98,85);
+
+--Q4 -WHAT EXERCISES DOES THE FRIEND DO
+
+SELECT exercise
+FROM friend_smartwatch;
+
+--THE TABLE WOULD SHOW STATIONARY BIKE DANCE ,WALK, SNOWBOARDING, KICKBOXING AND STRENGTH TRAINING
+
+--TO ADD A QUERY WITHIN A QUERY (SUBQUERY)
+--EXAMPLE BELOW
+
+--Q5- WHAT ACTIVITIES DO BOTH FRIENDS DO? DO A QUERY WITHIN A QUERY
+
+SELECT exercise
+FROM samrtwatch_exercise
+WHERE exercise IN 
+(SELECT exercise
+FROM friend_smartwatch)
+
+table would show dance walk snow boarding stationary bike
+
+--fOR NO DUPLICATES USE "DISTINCT"
+--EXAMPLE
+
+SELECT DISTINCT exercise
+FROM smartwatch_exercise
+WHERE exercise IN 
+(SELECT exercise
+FROM friend_smartwatch)
+
+
+
